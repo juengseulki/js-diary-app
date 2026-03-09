@@ -30,6 +30,9 @@ const diaryList = document.querySelector("#diary-list"); // 힌트: '#diary-list
 const emptyMessage = document.querySelector("#empty-message"); // 힌트: '#empty-message'
 const statsContainer = document.querySelector("#stats"); // 힌트: '#stats'
 
+// 도전과제 3
+const diaryTitle = document.querySelector("#diary-title");
+
 // ============================================
 // Part 2: 데이터 구조 만들기
 // ============================================
@@ -189,18 +192,47 @@ function renderAllEntries() {
   //    반환된 요소를 diaryList에 appendChild하세요
   //
   // 힌트: forEach로 순회, appendChild로 추가
+  // diaryList.innerHTML = "";
+
+  // if (diary.length === 0) {
+  //   emptyMessage.style.display = "block";
+  // } else {
+  //   emptyMessage.style.display = "none";
+  // }
+
+  // diary.forEach(function (entry) {
+  //   const entryElement = renderEntry(entry);
+  //   diaryList.appendChild(entryElement);
+  // });
+
+  // renderStats();
+
+  // 도전 과제 2번
   diaryList.innerHTML = "";
 
-  if (diary.length === 0) {
+  let entriesToRender = diary;
+
+  if (filterMood) {
+    entriesToRender = diary.filter(function (entry) {
+      return entry.mood === filterMood;
+    });
+  }
+
+  if (entriesToRender.length === 0) {
     emptyMessage.style.display = "block";
   } else {
     emptyMessage.style.display = "none";
   }
 
-  diary.forEach(function (entry) {
+  entriesToRender.forEach(function (entry) {
     const entryElement = renderEntry(entry);
     diaryList.appendChild(entryElement);
   });
+
+  // 도전 과제 3번
+  if (diaryTitle) {
+    diaryTitle.textContent = `일기 목록 (${diary.length})`;
+  }
 
   renderStats();
 }
@@ -419,6 +451,14 @@ function renderStats() {
   }
 
   statsContainer.appendChild(grid);
+}
+
+//도전 과제
+// 1. 제목이나 내용에 keyword가 포함된 일기 찾기
+function getEntriesByKeyword(keyword) {
+  return diary.filter(function (entry) {
+    return entry.title.includes(keyword) || entry.content.includes(keyword);
+  });
 }
 
 // 초기 렌더링

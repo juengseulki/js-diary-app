@@ -180,7 +180,7 @@ function renderEntry(entry) {
 }
 
 // 4-2. 전체 일기 목록 그리기
-function renderAllEntries() {
+function renderAllEntries(filterMood = null) {
   // TODO: diary 배열의 모든 일기를 화면에 그리세요
   //
   // 단계:
